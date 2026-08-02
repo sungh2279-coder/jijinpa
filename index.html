@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -124,11 +123,11 @@
     width:100%; -webkit-appearance:none; height:5px; border-radius:3px; background:var(--grid); outline:none;
   }
   input[type=range]::-webkit-slider-thumb{
-    -webkit-appearance:none; width:17px; height:17px; border-radius:50%; background:var(--accent);
+    -webkit-appearance:none; width:17px; height:17px; border-radius:50%; background:currentColor;
     border:2px solid #191113; cursor:pointer; margin-top:-6px;
   }
   input[type=range]::-moz-range-thumb{
-    width:15px; height:15px; border-radius:50%; background:var(--accent); border:2px solid #191113; cursor:pointer;
+    width:15px; height:15px; border-radius:50%; background:currentColor; border:2px solid #191113; cursor:pointer;
   }
   input[type=range]::-webkit-slider-runnable-track{height:5px; border-radius:3px;}
   .hint{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.5;}
@@ -146,6 +145,7 @@
   .legend-line{width:16px; height:3px; border-radius:2px; display:inline-block;}
 
   .readout-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:14px;}
+  .readout-row[style*="column"] .readout{flex:none;}
   .readout{
     flex:1; min-width:120px; background:var(--panel2); border:1px solid var(--border); border-radius:10px;
     padding:12px 14px;
@@ -206,6 +206,20 @@
   .preset-btn:hover{color:var(--text); border-color:var(--muted);}
   .preset-btn.active{border-color:var(--good); color:var(--good);}
 
+  .viz-row-2col{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media (max-width:640px){ .viz-row-2col{grid-template-columns:1fr;} }
+  .chart-title{font-size:12.5px; color:var(--muted); margin:0 0 10px; font-weight:600; letter-spacing:.02em;}
+
+  .subtab-row{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+  .subtab-btn{
+    font-family:'Noto Sans KR',sans-serif; font-size:13px; font-weight:600; background:var(--panel);
+    border:1px solid var(--border); color:var(--muted); padding:9px 16px; border-radius:10px; cursor:pointer;
+    transition:all .15s;
+  }
+  .subtab-btn:hover{color:var(--text); border-color:var(--muted);}
+  .subtab-btn.active{background:var(--accent); border-color:var(--accent); color:#191113;}
+  .subtab-panel{animation:fadeIn .3s ease;}
+
   .nav-footer{
     max-width:1080px; margin:34px auto 0; padding:20px 24px 0; display:flex; justify-content:space-between;
     border-top:1px solid var(--border);
@@ -263,7 +277,7 @@
             <span class="name"><span class="swatch" style="background:var(--p-color)"></span>P파 속도 (V<sub>P</sub>)</span>
             <span class="val" id="v1-vp-val">6.5 km/s</span>
           </div>
-          <input type="range" id="v1-vp" min="5.0" max="8.5" step="0.1" value="6.5" style="accent-color:var(--p-color)">
+          <input type="range" id="v1-vp" min="5.0" max="8.5" step="0.1" value="6.5" style="accent-color:var(--p-color); color:var(--p-color)">
           <div class="hint">대륙 지각 기준 약 6~8 km/s</div>
         </div>
         <div class="field">
@@ -271,7 +285,7 @@
             <span class="name"><span class="swatch" style="background:var(--s-color)"></span>S파 속도 (V<sub>S</sub>)</span>
             <span class="val" id="v1-vs-val">3.8 km/s</span>
           </div>
-          <input type="range" id="v1-vs" min="3.0" max="5.0" step="0.1" value="3.8" style="accent-color:var(--s-color)">
+          <input type="range" id="v1-vs" min="3.0" max="5.0" step="0.1" value="3.8" style="accent-color:var(--s-color); color:var(--s-color)">
           <div class="hint">대륙 지각 기준 약 4~5 km/s</div>
         </div>
         <div class="warn" id="v1-warn">⚠ P파 속도는 S파 속도보다 빨라야 그래프가 의미를 가져요.</div>
@@ -313,7 +327,7 @@
             <span class="name">진앙 거리</span>
             <span class="val" id="v2-dist-val">300 km</span>
           </div>
-          <input type="range" id="v2-dist" min="10" max="500" step="5" value="300" style="accent-color:var(--accent)">
+          <input type="range" id="v2-dist" min="10" max="500" step="5" value="300" style="accent-color:var(--accent); color:var(--accent)">
           <div class="hint">관측소로부터 진앙까지의 수평 거리예요. 슬라이더를 움직여 그래프 위의 점선을 이동해 보세요.</div>
         </div>
       </div>
@@ -362,7 +376,7 @@
             <span class="name">PS시 (t)</span>
             <span class="val" id="v3-t-val">25.0 초</span>
           </div>
-          <input type="range" id="v3-t" min="1" max="80" step="0.5" value="25" style="accent-color:var(--accent)">
+          <input type="range" id="v3-t" min="1" max="80" step="0.5" value="25" style="accent-color:var(--accent); color:var(--accent)">
           <div class="hint">지진계 기록에서 측정한 P파-S파 도달 시각 차예요.</div>
         </div>
       </div>
@@ -415,21 +429,21 @@
             <span class="name"><span class="swatch" style="background:var(--p-color)"></span>지각 속도 (V<sub>0</sub>)</span>
             <span class="val" id="v4-v0-val">6.1 km/s</span>
           </div>
-          <input type="range" id="v4-v0" min="5.5" max="7.0" step="0.1" value="6.1" style="accent-color:var(--p-color)">
+          <input type="range" id="v4-v0" min="5.5" max="7.0" step="0.1" value="6.1" style="accent-color:var(--p-color); color:var(--p-color)">
         </div>
         <div class="field">
           <div class="field-label">
             <span class="name"><span class="swatch" style="background:var(--s-color)"></span>맨틀 속도 (V<sub>1</sub>)</span>
             <span class="val" id="v4-v1-val">8.1 km/s</span>
           </div>
-          <input type="range" id="v4-v1" min="7.2" max="8.6" step="0.1" value="8.1" style="accent-color:var(--s-color)">
+          <input type="range" id="v4-v1" min="7.2" max="8.6" step="0.1" value="8.1" style="accent-color:var(--s-color); color:var(--s-color)">
         </div>
         <div class="field">
           <div class="field-label">
             <span class="name"><span class="swatch" style="background:var(--good)"></span>지각 두께 (h₀) — 정답값</span>
             <span class="val" id="v4-h0-val">30 km</span>
           </div>
-          <input type="range" id="v4-h0" min="5" max="70" step="1" value="30" style="accent-color:var(--good)">
+          <input type="range" id="v4-h0" min="5" max="70" step="1" value="30" style="accent-color:var(--good); color:var(--good)">
           <div class="hint">이 값을 바꾸면 그래프의 교차 거리(L)가 함께 움직여요. 아래 식으로 L → h₀를 거꾸로 계산해 검산해 보세요.</div>
         </div>
       </div>
@@ -474,25 +488,61 @@
             <span class="name"><span class="swatch" style="background:var(--good)"></span>지각 두께 (h₀)</span>
             <span class="val" id="v5-h0-val">30 km</span>
           </div>
-          <input type="range" id="v5-h0" min="5" max="70" step="1" value="30" style="accent-color:var(--good)">
+          <input type="range" id="v5-h0" min="5" max="70" step="1" value="30" style="accent-color:var(--good); color:var(--good)">
         </div>
         <div class="preset-row">
           <button class="preset-btn" id="v5-preset-cont" onclick="setPreset5('cont')">대륙 지각 (평균 35km)</button>
           <button class="preset-btn" id="v5-preset-ocean" onclick="setPreset5('ocean')">해양 지각 (평균 7km)</button>
         </div>
         <button class="btn" onclick="pullFromStep4()">↺ 4단계에서 구한 값 가져오기</button>
-        <div class="hint" style="margin-top:16px;">지각: 30~70km(대륙) / 5~8km(해양) · 맨틀 경계(모호면) ~2,890km · 외핵 경계 ~5,100km · 지구 중심 ~6,400km</div>
+
+        <div class="readout-row" style="flex-direction:column; margin-top:20px; padding-top:18px; border-top:1px dashed var(--border);">
+          <div class="readout"><div class="rlabel">지각 두께</div><div class="rval g" id="v5-r-h0">–</div></div>
+          <div class="readout"><div class="rlabel">모호면 깊이</div><div class="rval d" id="v5-r-moho">–</div></div>
+          <div class="readout"><div class="rlabel">임계각 (i<sub>c</sub>)</div><div class="rval p" id="v5-r-ic">–</div></div>
+        </div>
+        <div class="hint" style="margin-top:16px;">지각: 30~70km(대륙) / 5~8km(해양) · 모호면 ~2,890km · 외핵 경계 ~5,100km · 지구 중심 ~6,400km</div>
       </div>
 
       <div>
-        <div class="chart-wrap" style="padding-bottom:16px;">
-          <svg id="earth5" viewBox="0 0 600 340"></svg>
+        <div class="subtab-row" id="v5-subtabs">
+          <button class="subtab-btn active" data-tab="refract" onclick="setSubtab5('refract')">① 굴절 경로</button>
+          <button class="subtab-btn" data-tab="vel" onclick="setSubtab5('vel')">② 깊이별 속도 그래프</button>
+          <button class="subtab-btn" data-tab="earth" onclick="setSubtab5('earth')">③ 지구 단면</button>
         </div>
-        <div class="readout-row">
-          <div class="readout"><div class="rlabel">지각 두께</div><div class="rval g" id="v5-r-h0">–</div></div>
-          <div class="readout"><div class="rlabel">모호면 깊이</div><div class="rval d" id="v5-r-moho">–</div></div>
+
+        <div class="subtab-panel" data-panel="refract">
+          <div class="chart-wrap">
+            <div class="chart-title">지진파의 굴절 경로 (직접파 vs 굴절파)</div>
+            <svg id="refract5" viewBox="0 0 400 260"></svg>
+            <div class="legend-row">
+              <span class="legend-item"><span class="legend-line" style="background:#c9d3de"></span>직접파</span>
+              <span class="legend-item"><span class="legend-line" style="background:var(--accent)"></span>굴절파</span>
+              <span class="legend-item"><span class="legend-line" style="background:var(--good)"></span>임계각 i<sub>c</sub></span>
+            </div>
+          </div>
+          <div class="note-box"><b>굴절이 일어나는 이유</b> — 지각(V₀)보다 맨틀(V₁)에서 지진파 속도가 더 빠르기 때문에, 임계각(i<sub>c</sub> = sin<sup>-1</sup>(V₀/V₁))으로 입사한 파는 맨틀 경계를 따라 진행하다가 다시 지표로 굴절해 나와요. 이 굴절파가 직접파보다 늦게 출발해도, 더 빠른 맨틀을 지나기 때문에 먼 거리에서는 오히려 먼저 도착할 수 있어요.</div>
         </div>
-        <div class="note-box"><b>기억하기</b> — 지진파의 속도 변화(불연속면)를 이용해 지각-맨틀 경계(모호면), 맨틀-외핵 경계, 외핵-내핵 경계를 알아낼 수 있어요. S파가 통과하지 못하는 암영대의 존재로 외핵이 액체 상태임도 알 수 있었죠.</div>
+
+        <div class="subtab-panel" data-panel="vel" style="display:none;">
+          <div class="chart-wrap">
+            <div class="chart-title">깊이에 따른 지진파 속도 변화</div>
+            <svg id="veldepth5" viewBox="0 0 260 300" style="max-width:340px; margin:0 auto; display:block;"></svg>
+            <div class="legend-row" style="justify-content:center;">
+              <span class="legend-item"><span class="legend-line" style="background:var(--p-color)"></span>속도 (V<sub>0</sub>→V<sub>1</sub>)</span>
+              <span class="legend-item"><span class="legend-line" style="background:var(--good)"></span>모호면</span>
+            </div>
+          </div>
+          <div class="note-box"><b>이 그래프가 보여주는 것</b> — 지각 구간에서는 속도가 V₀로 일정하다가, 모호면을 지나는 순간 V₁로 계단처럼 뛰어올라요. 이렇게 속도가 불연속적으로 변하는 지점을 찾아내는 것이 바로 지각과 맨틀의 경계(모호면)를 알아내는 방법이에요.</div>
+        </div>
+
+        <div class="subtab-panel" data-panel="earth" style="display:none;">
+          <div class="chart-wrap">
+            <div class="chart-title">지구 내부 단면 (지각 두께 시각적 과장 표현)</div>
+            <svg id="earth5" viewBox="0 0 600 340"></svg>
+          </div>
+          <div class="note-box"><b>기억하기</b> — 지진파의 속도 변화(불연속면)를 이용해 지각-맨틀 경계(모호면), 맨틀-외핵 경계, 외핵-내핵 경계를 알아낼 수 있어요. S파가 통과하지 못하는 암영대의 존재로 외핵이 액체 상태임도 알 수 있었죠.</div>
+        </div>
       </div>
     </div>
   </section>
@@ -501,7 +551,7 @@
 
 <div class="nav-footer">
   <button class="btn" id="prevBtn" onclick="goStep(currentStep-1)">← 이전 단계</button>
-  <button class="btn primary" id="nextBtn" onclick="goStep(currentStep+1)">다음 단계 →</button>
+  <button class="btn primary" id="nextBtn">다음 단계 →</button>
 </div>
 
 <script>
@@ -554,6 +604,11 @@ function curvePath(V, xMax, tMax, steps=48){
   }
   return 'M '+pts.join(' L ');
 }
+/* 1·2단계 그래프는 축 범위를 고정해요. Vp·Vs 값에 따라 축을 매번 다시 스케일링하면
+   한쪽 속도만 바꿔도 축 전체가 늘어나거나 줄어들면서 반대쪽 곡선까지 움직여 보이는
+   착시가 생기기 때문이에요. */
+const FIXED_XMAX_12 = 500;
+const FIXED_TMAX_12 = 155;
 
 /* ============================================================
    상태
@@ -573,8 +628,8 @@ function updateStep1(){
   const invalid = state.Vp<=state.Vs;
   warn.classList.toggle('show', invalid);
 
-  const xMax=500;
-  const tMax=Math.max(calcT(xMax,state.Vs,xMax), calcT(xMax,Math.max(state.Vp,0.1),xMax))*1.15;
+  const xMax=FIXED_XMAX_12;
+  const tMax=FIXED_TMAX_12;
   drawAxes('chart1-axes', xMax, tMax, '진앙 거리 (km)', '도달 시각 (초)');
 
   const pEndY=Y(calcT(xMax,state.Vp,xMax),tMax);
@@ -605,8 +660,8 @@ function updateStep2(){
   state.dist2=parseFloat(v2dist.value);
   document.getElementById('v2-dist-val').textContent=Math.round(state.dist2)+' km';
 
-  const xMax=500;
-  const tMax=Math.max(calcT(xMax,state.Vs,xMax), calcT(xMax,Math.max(state.Vp,0.1),xMax))*1.15;
+  const xMax=FIXED_XMAX_12;
+  const tMax=FIXED_TMAX_12;
   drawAxes('chart2-axes', xMax, tMax, '진앙 거리 (km)', '도달 시각 (초)');
 
   const tp=calcT(state.dist2,state.Vp,xMax), ts=calcT(state.dist2,state.Vs,xMax);
@@ -693,7 +748,7 @@ function updateStep4(){
   const xMax=500;
   const directEnd = xMax/V0;
   const refractEnd = xMax/V1 + ti;
-  const tMax = Math.max(directEnd, refractEnd)*1.1;
+  const tMax=105; // 고정 축: 슬라이더 극단값 기준 최대값(약 91초)에 여유를 둔 값
   drawAxes('chart4-axes', xMax, tMax, '진앙 거리 (km)', '주행 시간 (초)');
 
   const dEnd={x:X(xMax,xMax), y:Y(directEnd,tMax)};
@@ -723,6 +778,86 @@ function updateStep4(){
    STEP 5 — 지구 단면
 ============================================================ */
 const v5h0=document.getElementById('v5-h0');
+
+/* -- 새 다이어그램 1: 지진파 굴절 경로 (직접파 vs 굴절파, 임계각) -- */
+function drawRefraction5(){
+  const V0=state.V0, V1=state.V1, h0=state.h05;
+  const ic = Math.asin(Math.min(V0/V1, 0.999));
+  const icDeg = ic*180/Math.PI;
+  document.getElementById('v5-r-ic').textContent = icDeg.toFixed(1)+'°';
+
+  const W=400, H=260;
+  const xLeft=50, xRight=350, ySurface=54;
+  const depthPx = 34 + (h0-5)/65*130; // h0(5~70km) -> 시각적 깊이(34~164px), 과장 표현
+  const yMoho = ySurface + depthPx;
+  const midX=(xLeft+xRight)/2;
+  const offsetPx = depthPx*Math.tan(ic);
+  let m1x=xLeft+offsetPx, m2x=xRight-offsetPx;
+  if(m1x>m2x){ m1x=midX; m2x=midX; }
+
+  let s='';
+  s+=`<rect x="20" y="${ySurface}" width="360" height="${depthPx}" fill="#212c3a"/>`;
+  s+=`<rect x="20" y="${yMoho}" width="360" height="${H-yMoho-16}" fill="#221a12"/>`;
+  s+=`<line x1="20" y1="${ySurface}" x2="380" y2="${ySurface}" stroke="#5a6c82" stroke-width="1.4"/>`;
+  s+=`<line x1="20" y1="${yMoho}" x2="380" y2="${yMoho}" stroke="#caa46a" stroke-width="1.3" stroke-dasharray="5 3"/>`;
+
+  s+=`<text x="30" y="${ySurface+depthPx/2-2}" fill="#9fb0c4" font-family="Noto Sans KR" font-size="11" text-anchor="start">지각</text>`;
+  s+=`<text x="30" y="${ySurface+depthPx/2+13}" fill="#9fb0c4" font-family="IBM Plex Mono" font-size="10">V₀=${fmt(V0)}</text>`;
+  s+=`<text x="30" y="${yMoho+22}" fill="#caa06a" font-family="Noto Sans KR" font-size="11" text-anchor="start">맨틀</text>`;
+  s+=`<text x="30" y="${yMoho+37}" fill="#caa06a" font-family="IBM Plex Mono" font-size="10">V₁=${fmt(V1)}</text>`;
+
+  s+=`<circle cx="${xLeft}" cy="${ySurface}" r="4.5" fill="#fff"/>`;
+  s+=`<text x="${xLeft}" y="${ySurface-11}" fill="var(--text)" font-family="Noto Sans KR" font-size="11" text-anchor="middle">진원</text>`;
+  s+=`<circle cx="${xRight}" cy="${ySurface}" r="4.5" fill="var(--good)"/>`;
+  s+=`<text x="${xRight}" y="${ySurface-11}" fill="var(--good)" font-family="Noto Sans KR" font-size="11" text-anchor="middle">관측소</text>`;
+
+  s+=`<path d="M ${xLeft},${ySurface} Q ${midX},${ySurface+9} ${xRight},${ySurface}" stroke="#c9d3de" stroke-width="2.5" fill="none"/>`;
+  s+=`<path d="M ${xLeft},${ySurface} L ${m1x},${yMoho} L ${m2x},${yMoho} L ${xRight},${ySurface}" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linejoin="round"/>`;
+
+  const nl=24;
+  s+=`<line x1="${m1x}" y1="${yMoho-nl}" x2="${m1x}" y2="${yMoho+nl*0.4}" stroke="var(--good)" stroke-width="1" stroke-dasharray="3 2"/>`;
+  s+=`<text x="${m1x+7}" y="${yMoho-nl-4}" fill="var(--good)" font-family="IBM Plex Mono" font-size="11" font-weight="700">i꜀ = ${icDeg.toFixed(1)}°</text>`;
+
+  s+=`<text x="${W/2}" y="${H-4}" text-anchor="middle" fill="var(--muted)" font-family="Noto Sans KR" font-size="10">※ 깊이는 이해를 돕기 위해 과장되어 있어요</text>`;
+
+  document.getElementById('refract5').innerHTML=s;
+}
+
+/* -- 새 다이어그램 2: 깊이에 따른 지진파 속도 변화 (모호면에서 계단식 증가) -- */
+function drawVelocityDepth5(){
+  const V0=state.V0, V1=state.V1, h0=state.h05;
+  const maxDepth=100, vMin=4.5, vMax=9.0;
+  const W=260, H=300, ML2=52, MR2=20, MT2=20, MB2=34;
+  const PW2=W-ML2-MR2, PH2=H-MT2-MB2;
+  const VX=v=>ML2+(v-vMin)/(vMax-vMin)*PW2;
+  const DY=d=>MT2+(d/maxDepth)*PH2;
+
+  let s='';
+  for(let i=0;i<=4;i++){
+    const vv=vMin+(vMax-vMin)*i/4, px=VX(vv);
+    s+=`<line x1="${px}" y1="${MT2}" x2="${px}" y2="${MT2+PH2}" stroke="var(--grid)"/>`;
+    s+=`<text x="${px}" y="${MT2+PH2+16}" text-anchor="middle" fill="var(--muted)" font-family="IBM Plex Mono" font-size="9.5">${vv.toFixed(1)}</text>`;
+  }
+  for(let j=0;j<=5;j++){
+    const dd=maxDepth*j/5, py=DY(dd);
+    s+=`<line x1="${ML2}" y1="${py}" x2="${ML2+PW2}" y2="${py}" stroke="var(--grid)"/>`;
+    s+=`<text x="${ML2-8}" y="${py+3}" text-anchor="end" fill="var(--muted)" font-family="IBM Plex Mono" font-size="9.5">${Math.round(dd)}</text>`;
+  }
+  s+=`<line x1="${ML2}" y1="${MT2}" x2="${ML2}" y2="${MT2+PH2}" stroke="#46566a"/>`;
+  s+=`<line x1="${ML2}" y1="${MT2+PH2}" x2="${ML2+PW2}" y2="${MT2+PH2}" stroke="#46566a"/>`;
+  s+=`<text x="${ML2+PW2/2}" y="${H-6}" text-anchor="middle" fill="var(--muted)" font-family="Noto Sans KR" font-size="10.5">속도 (km/s)</text>`;
+  s+=`<text x="13" y="${MT2+PH2/2}" text-anchor="middle" fill="var(--muted)" font-family="Noto Sans KR" font-size="10.5" transform="rotate(-90 13 ${MT2+PH2/2})">깊이 (km)</text>`;
+
+  const hC=Math.min(h0,maxDepth);
+  const path=`M ${VX(V0)},${MT2} L ${VX(V0)},${DY(hC)} L ${VX(V1)},${DY(hC)} L ${VX(V1)},${MT2+PH2}`;
+  s+=`<path d="${path}" stroke="var(--p-color)" stroke-width="3" fill="none" stroke-linejoin="round"/>`;
+
+  s+=`<line x1="${ML2}" y1="${DY(hC)}" x2="${ML2+PW2}" y2="${DY(hC)}" stroke="var(--good)" stroke-width="1.3" stroke-dasharray="4 3"/>`;
+  s+=`<text x="${ML2+PW2-4}" y="${DY(hC)-5}" text-anchor="end" fill="var(--good)" font-family="IBM Plex Mono" font-size="10">모호면 ${Math.round(h0)}km</text>`;
+
+  document.getElementById('veldepth5').innerHTML=s;
+}
+
 function drawEarth5(){
   state.h05=parseFloat(v5h0.value);
   document.getElementById('v5-h0-val').textContent=Math.round(state.h05)+' km';
@@ -731,6 +866,9 @@ function drawEarth5(){
 
   document.getElementById('v5-preset-cont').classList.toggle('active', Math.abs(state.h05-35)<0.6);
   document.getElementById('v5-preset-ocean').classList.toggle('active', Math.abs(state.h05-7)<0.6);
+
+  drawRefraction5();
+  drawVelocityDepth5();
 
   const cx=300, cy=310;
   const rSurface=250, rOuterCore=137, rInnerCore=51;
@@ -765,6 +903,10 @@ function drawEarth5(){
   document.getElementById('earth5').innerHTML=s;
 }
 v5h0.addEventListener('input', drawEarth5);
+function setSubtab5(tab){
+  document.querySelectorAll('#v5-subtabs .subtab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===tab));
+  document.querySelectorAll('.subtab-panel').forEach(p=>p.style.display = (p.dataset.panel===tab)?'':'none');
+}
 function setPreset5(kind){
   v5h0.value = kind==='cont' ? 35 : 7;
   drawEarth5();
@@ -814,8 +956,8 @@ function goStep(n){
   if(n===4) updateStep4();
   if(n===5) drawEarth5();
 }
-document.getElementById('nextBtn').addEventListener('click', (e)=>{
-  if(currentStep===5){ e.preventDefault(); goStep(1); }
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  goStep(currentStep===5 ? 1 : currentStep+1);
 });
 
 /* ============================================================
